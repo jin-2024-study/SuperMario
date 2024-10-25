@@ -1,0 +1,149 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class BackGround {
+  + BackGround(): 
+  + BackGround(int, boolean): 
+  - gan: BufferedImage
+  - tower: BufferedImage
+  - sort: int
+  - enemyList: List<Enemy>
+  - flag: boolean
+  - isReach: boolean
+  - obstacleList: List<Obstacle>
+  - bgImage: BufferedImage
+  - isBase: boolean
+  + getTower(): BufferedImage
+  + setReach(boolean): void
+  + isBase(): boolean
+  + getObstacleList(): List<Obstacle>
+  + getSort(): int
+  + isReach(): boolean
+  + isFlag(): boolean
+  + getGan(): BufferedImage
+  + setBase(boolean): void
+  + getBgImage(): BufferedImage
+  + getEnemyList(): List<Enemy>
+}
+class Enemy {
+  + Enemy(int, int, int, boolean, BackGround, int, int): 
+  + Enemy(int, int, int, boolean, BackGround): 
+  - bg: BackGround
+  - face_to: boolean
+  - x: int
+  - y: int
+  - thread: Thread
+  - show: BufferedImage
+  - max_down: int
+  - image_type: int
+  - type: int
+  - max_up: int
+  + getY(): int
+  + run(): void
+  + Death(): void
+  + getX(): int
+  + getShow(): BufferedImage
+  + getType(): int
+}
+class Mario {
+  + Mario(): 
+  + Mario(int, int): 
+  - ySpeed: int
+  - thread: Thread
+  - backGround: BackGround
+  - upTime: int
+  - score: int
+  - y: int
+  - xSpeed: int
+  - index: int
+  - x: int
+  - status: String
+  - show: BufferedImage
+  - isOk: boolean
+  - isDeath: boolean
+  + setX(int): void
+  + isDeath(): boolean
+  + getShow(): BufferedImage
+  + setY(int): void
+  + Death(): void
+  + getY(): int
+  + getX(): int
+  + leftStop(): void
+  + jump(): void
+  + setBackGround(BackGround): void
+  + rightMove(): void
+  + fall(): void
+  + leftMove(): void
+  + getScore(): int
+  + rightStop(): void
+  + run(): void
+  + isOk(): boolean
+}
+class Music {
+  + Music(): 
+}
+class MyFrame {
+  + MyFrame(): 
+  - allBg: List<BackGround>
+  - offSceenImage: Image
+  - thread: Thread
+  - nowBg: BackGround
+  - mario: Mario
+  + keyReleased(KeyEvent): void
+  + paint(Graphics): void
+  + run(): void
+  + main(String[]): void
+  + keyTyped(KeyEvent): void
+  + keyPressed(KeyEvent): void
+}
+class Obstacle {
+  + Obstacle(): 
+  + Obstacle(int, int, int, BackGround): 
+  - y: int
+  - type: int
+  - x: int
+  - bg: BackGround
+  ~ thread: Thread
+  - show: BufferedImage
+  + getX(): int
+  + getY(): int
+  + getType(): int
+  + run(): void
+  + getShow(): BufferedImage
+}
+class StaticValue {
+  + StaticValue(): 
+  + path: String
+  + run_L: List<BufferedImage>
+  + obstacle: List<BufferedImage>
+  + jump_R: BufferedImage
+  + bg2: BufferedImage
+  + gan: BufferedImage
+  + flower: List<BufferedImage>
+  + run_R: List<BufferedImage>
+  + bg: BufferedImage
+  + stand_R: BufferedImage
+  + jump_L: BufferedImage
+  + stand_L: BufferedImage
+  + mogu: List<BufferedImage>
+  + tower: BufferedImage
+  + init(): void
+}
+
+BackGround   -[#595959,dashed]->  Enemy       : "«create»"
+BackGround  "1" *-[#595959,plain]-> "enemyList\n*" Enemy       
+BackGround   -[#595959,dashed]->  Obstacle    : "«create»"
+BackGround  "1" *-[#595959,plain]-> "obstacleList\n*" Obstacle    
+Enemy       "1" *-[#595959,plain]-> "bg\n1" BackGround  
+Mario       "1" *-[#595959,plain]-> "backGround\n1" BackGround  
+Mario        -[#595959,dashed]->  BackGround  : "«create»"
+MyFrame     "1" *-[#595959,plain]-> "allBg\n*" BackGround  
+MyFrame      -[#595959,dashed]->  BackGround  : "«create»"
+MyFrame      -[#595959,dashed]->  Mario       : "«create»"
+MyFrame     "1" *-[#595959,plain]-> "mario\n1" Mario       
+MyFrame      -[#595959,dashed]->  Music       : "«create»"
+Obstacle    "1" *-[#595959,plain]-> "bg\n1" BackGround  
+@enduml
